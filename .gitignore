@@ -7,4 +7,6 @@ wheels/
 *.egg-info
 
 # Virtual environments
-holo_venv
+.venv
+
+.env
