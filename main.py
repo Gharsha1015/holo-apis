@@ -14,7 +14,7 @@ app = FastAPI(
 origins = [
     "http://localhost:5173",      
     "http://127.0.0.1:5173",
-    "https://holo-frontend-three.vercel.app/"
+    "https://holo-frontend-three.vercel.app"
 ]
 
 app.add_middleware(
