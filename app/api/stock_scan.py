@@ -9,7 +9,7 @@ from app.models.stocks import Stocks
 
 router = APIRouter(
     prefix="/stocks",
-    tags=["Stocks"]
+    tags=["Stocks Scan"]
 )
 
 
@@ -61,3 +61,20 @@ def scan_market(
         "stocks_found": len(stocks)
     }
     
+@router.get("/scan-results/latest")
+def get_latest_scan_results(
+    db: Session = Depends(get_db)
+):
+    latest_scan_time = db.query(Stocks.run_datetime).order_by(Stocks.run_datetime.desc()).first()
+
+    if not latest_scan_time:
+        return {
+            "message": "No scan results found."
+        }
+
+    latest_stocks = db.query(Stocks).filter(Stocks.run_datetime == latest_scan_time[0]).all()
+
+    return {
+        "scan_time": latest_scan_time[0],
+        "stocks": latest_stocks
+    }
